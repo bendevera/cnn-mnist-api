@@ -1,4 +1,4 @@
-# ML-Algos-API
+# MNIST-ML-Algos-API
 
 ## Setup instrucitons:
 - setup virtuanl env and activate it
