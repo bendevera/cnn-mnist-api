@@ -26,4 +26,17 @@ def algo_predict(id):
         return jsonify({'error': '{} is not a valid ID.'.format(id)})
     params = request.json
     prediction = app.util.make_prediction(algo, params)
-    return jsonify({'prediction': int(prediction[0])})
+    return jsonify({'prediction': int(prediction)})
+
+@api.route('/predictions', methods=['POST'])
+def predictions():
+    params = request.json 
+    print(params)
+    predictions = []
+    for algo in list(params['algos']):
+        curr_algo = Algo.query.filter_by(id=algo).first()
+        if curr_algo is None:
+            continue
+        prediction = app.util.make_prediction(curr_algo, params)
+        predictions.append({"name": curr_algo.title, "prediction": int(prediction)})
+    return jsonify({'predictions': predictions})

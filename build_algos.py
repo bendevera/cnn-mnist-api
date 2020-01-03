@@ -19,6 +19,9 @@ algo_data = {
     }
 }
 
+''' MNIST MODELS:
+need to create a way for user to draw a number on the react frontend 
+side for these "interactable" parts of these models '''
 def build_SGDClassifier():
     # Builds Stoca
     print('Started to build SGD Classifier')
