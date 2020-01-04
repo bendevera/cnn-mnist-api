@@ -1,4 +1,4 @@
-# from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import SGDClassifier
 import pickle
 import numpy as np 
@@ -24,7 +24,7 @@ def make_prediction(algo, params):
     data = preprocess_image(params['img'])
     if algo.title == 'SGDClassifier':
         # could have data be an index of the test data
-        # data = scaler.fit_transform(data.reshape(28, 28))
+        data = scaler.fit_transform(data)
         prediction = sgd_clf.predict(data)
         return prediction[0]
     else:
@@ -36,4 +36,4 @@ sgd_path = os.path.join(dir_path, 'lib/algos/SGDClassifier.pkl')
 with open(sgd_path, 'rb') as f:
     sgd_clf = pickle.load(f)
 
-# scaler = StandardScaler()
+scaler = StandardScaler()
