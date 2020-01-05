@@ -14,8 +14,6 @@ class Algo(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String)
     description = Column(String, nullable=True)
-    supervised = Column(Boolean)
-    regression = Column(Boolean)
     type = Column(String)
 
     def to_json(self):
@@ -23,8 +21,6 @@ class Algo(db.Model):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'supervised': self.supervised,
-            'regression': self.regression,
             'type': self.type
         }
 

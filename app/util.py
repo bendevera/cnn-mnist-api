@@ -1,5 +1,6 @@
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import SGDClassifier
+from sklearn.ensemble import RandomForestClassifier
 import pickle
 import numpy as np 
 import os
@@ -23,9 +24,11 @@ def make_prediction(algo, params):
     # going to add preprocessing for data here
     data = preprocess_image(params['img'])
     if algo.title == 'SGDClassifier':
-        # could have data be an index of the test data
         data = scaler.fit_transform(data)
         prediction = sgd_clf.predict(data)
+        return prediction[0]
+    elif algo.title == 'RandomForestClassifier':
+        prediction = RFC.predict(data)
         return prediction[0]
     else:
         return "Prediction method not created for that algo yet."
@@ -35,5 +38,10 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sgd_path = os.path.join(dir_path, 'lib/algos/SGDClassifier.pkl')
 with open(sgd_path, 'rb') as f:
     sgd_clf = pickle.load(f)
+
+RFC = RandomForestClassifier()
+rfc_path = os.path.join(dir_path, 'lib/algos/RFC.pkl')
+with open(rfc_path, 'rb') as f:
+    RFC = pickle.load(f)
 
 scaler = StandardScaler()

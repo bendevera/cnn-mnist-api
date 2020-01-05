@@ -1,8 +1,8 @@
-"""Creating the Algo table
+"""creating db
 
-Revision ID: d3f03ed60639
+Revision ID: 1b449191b314
 Revises: 
-Create Date: 2019-12-22 20:01:29.637508
+Create Date: 2020-01-05 12:36:17.723406
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd3f03ed60639'
+revision = '1b449191b314'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,8 +22,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('title', sa.String(), nullable=True),
     sa.Column('description', sa.String(), nullable=True),
-    sa.Column('supervised', sa.Boolean(), nullable=True),
-    sa.Column('regression', sa.Boolean(), nullable=True),
     sa.Column('type', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )

@@ -38,5 +38,7 @@ def predictions():
         if curr_algo is None:
             continue
         prediction = app.util.make_prediction(curr_algo, params)
-        predictions.append({"name": curr_algo.title, "prediction": int(prediction)})
+        curr_result = curr_algo.to_json()
+        curr_result['prediction'] = prediction
+        predictions.append(curr_result)
     return jsonify({'predictions': predictions})
