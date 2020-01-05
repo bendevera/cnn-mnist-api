@@ -35,12 +35,12 @@ def make_prediction(algo, params):
 
 sgd_clf = SGDClassifier()
 dir_path = os.path.dirname(os.path.realpath(__file__))
-sgd_path = os.path.join(dir_path, 'lib/algos/SGDClassifier.pkl')
+sgd_path = os.path.join(dir_path, 'algos/SGDClassifier.pkl')
 with open(sgd_path, 'rb') as f:
     sgd_clf = pickle.load(f)
 
 RFC = RandomForestClassifier()
-rfc_path = os.path.join(dir_path, 'lib/algos/RFC.pkl')
+rfc_path = os.path.join(dir_path, 'algos/RFC.pkl')
 with open(rfc_path, 'rb') as f:
     RFC = pickle.load(f)
 

@@ -48,7 +48,7 @@ def build_SGD():
     sgd_clf.fit(X_train_scaled, y_train)
     predictions = sgd_clf.predict(scaler.fit_transform(X_test.astype(np.float64)))
     print('Accuracy score:', accuracy_score(y_test, predictions))
-    path = 'app/lib/algos/SGDClassifier.pkl'
+    path = 'app/algos/SGDClassifier.pkl'
     with open(path, 'wb') as f:
         pickle.dump(sgd_clf, f)
         print('Pickeled model at {}'.format(path))
@@ -69,7 +69,7 @@ def build_RFC():
     rfc.fit(X_train, y_train)
     predictions = rfc.predict(X_test)
     print('Accuracy score:', accuracy_score(y_test, predictions))
-    path = 'app/lib/algos/RFC.pkl'
+    path = 'app/algos/RFC.pkl'
     with open(path, 'wb') as f:
         pickle.dump(rfc, f)
         print('Pickled model at {}'.format(path))
