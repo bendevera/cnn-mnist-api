@@ -3,3 +3,4 @@ venv
 app/__pycache__
 .vscode
 app/lib/algos/RFC.pkl
+app/algos/SGDClassifier.pkl
