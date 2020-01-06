@@ -64,6 +64,7 @@ def build_SGD():
     db.session.commit()
 
 def build_RFC():
+    # Builds Random Forest Classifier 
     print('Started to build Random Forest Classifier')
     rfc = RandomForestClassifier()
     rfc.fit(X_train, y_train)
