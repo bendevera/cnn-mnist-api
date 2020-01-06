@@ -46,7 +46,7 @@ def build_SGD():
     X_train_scaled = scale_X(X_train)
     sgd_clf = SGDClassifier(max_iter=1000, tol=1e-3, random_state=42)
     sgd_clf.fit(X_train_scaled, y_train)
-    predictions = sgd_clf.predict(scaler.fit_transform(X_test.astype(np.float64)))
+    predictions = sgd_clf.predict(scale_X(X_test))
     print('Accuracy score:', accuracy_score(y_test, predictions))
     path = 'app/algos/SGDClassifier.pkl'
     with open(path, 'wb') as f:
@@ -86,5 +86,5 @@ def build_RFC():
     
 
 if __name__ == '__main__':
-    # build_SGD()
+    build_SGD()
     build_RFC()
