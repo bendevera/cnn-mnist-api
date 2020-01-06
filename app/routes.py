@@ -26,7 +26,7 @@ def algo_predict(id):
         return jsonify({'error': '{} is not a valid ID.'.format(id)})
     params = request.json
     prediction = app.util.make_prediction(algo, params)
-    return jsonify({'prediction': int(prediction)})
+    return jsonify({'prediction': prediction})
 
 @api.route('/predictions', methods=['POST'])
 def predictions():

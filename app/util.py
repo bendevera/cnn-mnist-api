@@ -26,10 +26,10 @@ def make_prediction(algo, params):
     if algo.title == 'SGDClassifier':
         data = scaler.fit_transform(data)
         prediction = sgd_clf.predict(data)
-        return prediction[0]
+        return int(prediction[0])
     elif algo.title == 'RandomForestClassifier':
         prediction = RFC.predict(data)
-        return prediction[0]
+        return int(prediction[0])
     else:
         return "Prediction method not created for that algo yet."
 
