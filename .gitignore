@@ -2,5 +2,4 @@ __pycache__
 venv
 app/__pycache__
 .vscode
-app/algos/SGDClassifier.pkl
-app/algos/RFC.pkl
+app/algos

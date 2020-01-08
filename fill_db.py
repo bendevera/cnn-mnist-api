@@ -17,35 +17,38 @@ algo_data = {
         'title': 'RandomForestClassifier',
         'description': 'Ensemble ML algorithm where a set of descision trees are used to "vote" on which class an image is',
         'type': 'Ensemble'
+    },
+    'KN': {
+        'title': 'KNeighborsClassifier',
+        'description': 'Classifier implementing the k-nearest neighbors vote.',
+        'type': 'Neighbors'
+    },
+    'CNN': {
+        'title': 'ConvolutionalNeuralNetwork',
+        'description': 'CNNs use a "frame"/"slide" to deduce paterns in an image or piece of data.',
+        'type': 'Neural Network'
     }
-
 }
 
-print("Adding SGD")
-SGD = Algo.query.filter_by(title=algo_data['SGD']['title']).first()
-if SGD is None:
-    SGD = Algo(title=algo_data['SGD']['title'], 
-            description=algo_data['SGD']['description'],
-            type=algo_data['SGD']['type'])
-    db.session.add(SGD)
-else:
-    SGD.description = algo_data['SGD']['description']
-    SGD.type = algo_data['SGD']['type']
-db.session.commit()
+def add_to_db(model):
+    print("Adding {} to db".format(model))
+    curr = Algo.query.filter_by(title=algo_data[model]['title']).first()
+    if curr is None:
+        curr= Algo(title=algo_data[model]['title'], 
+                description=algo_data[model]['description'],
+                type=algo_data[model]['type'])
+        db.session.add(curr)
+    else:
+        curr.description = algo_data[model]['description']
+        curr.type = algo_data[model]['type']
+    db.session.commit()
 
-print("Adding RFC")
-RFC = Algo.query.filter_by(title=algo_data['RFC']['title']).first()
-if RFC is None:
-    RFC = Algo(title=algo_data['RFC']['title'], 
-            description=algo_data['RFC']['description'],
-            type=algo_data['RFC']['type'])
-    db.session.add(RFC)
-else:
-    RFC.description = algo_data['RFC']['description']
-    RFC.type = algo_data['RFC']['type']
-db.session.commit()
+add_to_db("SGD")
+add_to_db("RFC")
+add_to_db("KN")
+add_to_db("CNN")
 
-print("All Algos:")
+print("\n All Algos:")
 algos = Algo.query.all()
 for algo in algos:
     print(algo.to_json())
