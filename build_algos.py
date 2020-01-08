@@ -78,7 +78,7 @@ def build_SGD():
 def build_RFC():
     # Builds Random Forest Classifier 
     print('Started to build Random Forest Classifier')
-    rfc = RandomForestClassifier()
+    rfc = RandomForestClassifier(n_jobs=-1, n_estimators=10)
     rfc.fit(X_train, y_train)
     predictions = rfc.predict(X_test)
     print('Accuracy score:', accuracy_score(y_test, predictions))
@@ -91,7 +91,7 @@ def build_RFC():
 def build_KN():
     # Builds KNeighborsClassifier
     print('Started to build K Neighbors Classifier')
-    kn = KNeighborsClassifier()
+    kn = KNeighborsClassifier(n_neighbors=5)
     kn.fit(X_train, y_train)
     predictions = kn.predict(X_test)
     print('Accuracy score:', accuracy_score(y_test, predictions))
@@ -172,10 +172,10 @@ def build_CNN():
 if __name__ == '__main__':
     building = {
         "SGD": False, 
-        "RFC": False, 
+        "RFC": True, 
         "KN": False,
         "SVC": False,
-        "CNN": True
+        "CNN": False
         }
     if building["SGD"] or building["RFC"] or building["KN"]:
         print("Loading MNIST data")
