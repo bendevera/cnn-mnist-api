@@ -14,6 +14,8 @@ class Algo(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String)
     description = Column(String, nullable=True)
+    optimizer = Column(String)
+    layers = Column(Integer)
     type = Column(String)
 
     def to_json(self):
@@ -21,6 +23,8 @@ class Algo(db.Model):
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'type': self.type
+            'type': self.type,
+            'optimizer': self.optimizer,
+            'layers': self.layers
         }
 
