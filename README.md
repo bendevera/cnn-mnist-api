@@ -1,4 +1,6 @@
-# MNIST-ML-Algos-API
+# CNN MNIST API 
+
+portfolio project pivoted from MNIST-ALGO-TOY
 
 ## Setup instrucitons:
 - setup virtuanl env and activate it
