@@ -33,7 +33,7 @@ test_images = test_images.astype('float32') / 255
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
 
-def add_to_db(optimizer, layers_num):
+def add_to_db(optimizer, layers_num, val_acc):
     model = optimizer + str(layers_num)
     print("Adding {} to db".format(model))
     curr = Algo.query.filter_by(title=model).first()
@@ -42,13 +42,15 @@ def add_to_db(optimizer, layers_num):
                 description=algo_data['description'],
                 type=algo_data['type'],
                 optimizer=optimizer,
-                layers=layers_num)
+                layers=layers_num,
+                val_acc=val_acc)
         db.session.add(curr)
     else:
         curr.description = algo_data['description']
         curr.type = algo_data['type']
         curr.optimizer = optimizer
         curr.layers = layers_num
+        curr.val_acc= val_acc 
     db.session.commit()
 
 def scale_X(X_train):
@@ -97,15 +99,16 @@ def build_CNN(optimizer, layers_num):
     path = 'app/algos/' + optimizer + str(layers_num) + '.h5'
     model.save(path)
     print("Saved model to: {}".format(path))
-    add_to_db(optimizer, layers_num)
+    add_to_db(optimizer, layers_num, round(test_acc, 3))
 
 
 if __name__ == '__main__':
     # clear db 
-    algos = Algo.query.all()
-    for algo in algos:
-        db.session.delete(algo)
-    db.session.commit()
+    # won't want to do this when tracking correct %
+    # algos = Algo.query.all()
+    # for algo in algos:
+    #     db.session.delete(algo)
+    # db.session.commit()
 
     # add all algos to db and create .h5 files
     for optimizer in algo_data['optimizers']:

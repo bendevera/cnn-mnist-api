@@ -17,6 +17,9 @@ class Algo(db.Model):
     optimizer = Column(String)
     layers = Column(Integer)
     type = Column(String)
+    val_acc = Column(Float)
+    num_pred = Column(Integer, default=0)
+    num_correct = Column(Integer, default=0)
 
     def to_json(self):
         return {
@@ -25,6 +28,17 @@ class Algo(db.Model):
             'description': self.description,
             'type': self.type,
             'optimizer': self.optimizer,
-            'layers': self.layers
+            'layers': self.layers,
+            'val_acc': self.val_acc,
+            'num_pred': self.num_pred,
+            'num_correct': self.num_correct
         }
+    
+    def add_prediction(self, correct):
+        if correct:
+            self.num_pred += 1
+            self.num_correct += 1
+        else:
+            self.num_pred += 1
+        db.session.commit()
 

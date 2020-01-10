@@ -14,20 +14,6 @@ def algos():
     algos_list = Algo.query.all()
     return jsonify({'algos': [algo.to_json() for algo in algos_list]})
 
-@api.route('/algos/<id>')
-def algo_by_id(id):
-    algo = Algo.query.filter_by(id=id).first()
-    return jsonify({'algo': algo.to_json()})
-
-@api.route('/algos/<id>/predict', methods=['POST'])
-def algo_predict(id):
-    algo = Algo.query.filter_by(id=id).first()
-    if algo is None:
-        return jsonify({'error': '{} is not a valid ID.'.format(id)})
-    params = request.json
-    prediction = app.util.make_prediction(algo, params)
-    return jsonify({'prediction': prediction})
-
 @api.route('/predict', methods=['POST'])
 def predict():
     params = request.json 
@@ -43,6 +29,24 @@ def predict():
     result = algo.to_json()
     result['prediction'] = prediction
     return jsonify(result)
+
+@api.route('/accuracy/<id>', methods=['POST'])
+def accuracy(id):
+    algo = Algo.query.filter_by(id=id).first()
+    if algo is None:
+        return jsonify({'error': '{} is not a valid ID.'.format(id)})
+    params = request.json 
+    # could collect info about what number it was supposed to be
+    # aka what number the model is having trouble classifying
+    if algo.num_pred != 0:
+        old_live_acc = round(algo.num_correct/ algo.num_pred, 3)
+        print("Old:", old_live_acc)
+    algo.add_prediction(params['correct'])
+    new_live_acc = round(algo.num_correct / algo.num_pred, 3)
+    print("New:", new_live_acc)
+    return jsonify({'liveAcc': new_live_acc, 'valAcc': algo.val_acc})
+
+
 
 # might be able to remove this route and use one above
 # new react app will only request a single prediction at a time
