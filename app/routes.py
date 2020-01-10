@@ -28,6 +28,22 @@ def algo_predict(id):
     prediction = app.util.make_prediction(algo, params)
     return jsonify({'prediction': prediction})
 
+@api.route('/predict', methods=['POST'])
+def predict():
+    params = request.json 
+    algo = Algo.query.filter_by(
+        optimizer=params['optimizer'], 
+        layers=params['layers']).first()
+    if algo is None:
+        return jsonify({'error': '{}, {} is not a valid combo.'.format(
+            params['optimizer'],
+            params['layers']
+        )})
+    prediction = app.util.make_prediction(algo, params)
+    result = algo.to_json()
+    result['prediction'] = prediction
+    return jsonify(result)
+
 # might be able to remove this route and use one above
 # new react app will only request a single prediction at a time
 @api.route('/predictions', methods=['POST'])

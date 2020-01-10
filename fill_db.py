@@ -4,7 +4,7 @@ where you are not able to run the build_algos.py
 script to build models, save models and then fill 
 db with model data
 '''
-
+from app import db
 from app.models import Algo 
 
 
